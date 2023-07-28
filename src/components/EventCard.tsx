@@ -9,17 +9,13 @@ export default function EventCard(props: Props) {
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       css={{ w: "100%", h: "400px" }}
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.2 }}
+      className="cursor-pointer"
     >
-      <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
-        <Col>
-          <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
-            New
-          </Text>
-          <Text h3 color="black">
-            Acme camera
-          </Text>
-        </Col>
-      </Card.Header>
+      <Card.Header
+        css={{ position: "absolute", zIndex: 1, top: 5 }}
+      ></Card.Header>
       <Card.Body css={{ p: 0 }}>
         <Card.Image
           src={event.thumbnail}
@@ -39,25 +35,25 @@ export default function EventCard(props: Props) {
           zIndex: 1,
         }}
       >
-        <Row>
+        <Row className="flex gap-2 !flex-col md:!flex-row">
           <Col>
-            <Text color="#000" size={12}>
-              Available soon.
+            <Text h3 color="#000" size={20} className="line-clamp-1">
+              {event.title}
             </Text>
-            <Text color="#000" size={12}>
-              Get notified.
+            <Text color="#000" size={12} className="line-clamp-1">
+              {event.description}
             </Text>
           </Col>
-          <Col>
-            <Row justify="flex-end">
-              <Button flat auto rounded color="secondary">
+          <Col className="w-full md:flex-auto md:!w-auto">
+            <Row className="w-full md:flex-end md:w-auto flex">
+              <Button auto rounded color="warning" className="!w-full md:!w-auto">
                 <Text
                   css={{ color: "inherit" }}
                   size={12}
                   weight="bold"
                   transform="uppercase"
                 >
-                  Notify Me
+                  Purchase
                 </Text>
               </Button>
             </Row>

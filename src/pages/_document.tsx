@@ -1,15 +1,24 @@
-'use client'
-import React from "react";
-import Document, { Html, Head, Main, NextScript, DocumentContext } from "next/document";
-import { CssBaseline } from "@nextui-org/react";
+"use client"
+import React from "react"
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  DocumentContext,
+} from "next/document"
+import { CssBaseline } from "@nextui-org/react"
+import { parseCookies } from "~/utils/parseCookies"
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
-    const initialProps = await Document.getInitialProps(ctx);
+    const initialProps = await Document.getInitialProps(ctx)
+    const cookies = parseCookies(ctx.req)
     return {
       ...initialProps,
-      styles: React.Children.toArray([initialProps.styles])
-    };
+      styles: React.Children.toArray([initialProps.styles]),
+      cookies,
+    }
   }
 
   render() {
@@ -21,8 +30,8 @@ class MyDocument extends Document {
           <NextScript />
         </body>
       </Html>
-    );
+    )
   }
 }
 
-export default MyDocument;
+export default MyDocument

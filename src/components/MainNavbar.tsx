@@ -3,7 +3,7 @@ import { Button, Navbar, Link, Text } from "@nextui-org/react"
 
 export default function MainNavbar() {
   return (
-    <Navbar isBordered variant="sticky">
+    <Navbar isBordered variant="floating">
       <Navbar.Brand>
         <Text b color="inherit">
           Event Chaser

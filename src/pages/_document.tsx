@@ -8,16 +8,13 @@ import Document, {
   DocumentContext,
 } from "next/document"
 import { CssBaseline } from "@nextui-org/react"
-import { parseCookies } from "~/utils/parseCookies"
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx)
-    const cookies = parseCookies(ctx.req)
     return {
       ...initialProps,
       styles: React.Children.toArray([initialProps.styles]),
-      cookies,
     }
   }
 

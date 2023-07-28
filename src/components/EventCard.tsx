@@ -1,10 +1,15 @@
 import { Card, Col, Row, Button, Text } from "@nextui-org/react"
 import { Event } from "~/models/Event"
-
+import { motion } from "framer-motion"
+const CardContainer = motion(Card)
 export default function EventCard(props: Props) {
   const { event } = props
   return (
-    <Card css={{ w: "100%", h: "400px" }}>
+    <CardContainer
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      css={{ w: "100%", h: "400px" }}
+    >
       <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
         <Col>
           <Text size={12} weight="bold" transform="uppercase" color="#ffffffAA">
@@ -59,7 +64,7 @@ export default function EventCard(props: Props) {
           </Col>
         </Row>
       </Card.Footer>
-    </Card>
+    </CardContainer>
   )
 }
 

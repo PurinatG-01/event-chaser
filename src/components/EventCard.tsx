@@ -22,7 +22,7 @@ export default function EventCard(props: Props) {
       </Card.Header>
       <Card.Body css={{ p: 0 }}>
         <Card.Image
-          src={event.thumnbail}
+          src={event.thumbnail}
           width="100%"
           height="100%"
           objectFit="cover"

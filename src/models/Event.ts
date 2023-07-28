@@ -11,7 +11,7 @@ export interface Event {
   title: string
   totalTickets: number
   updatedAt: string
-  thumnbail: string
+  thumbnail: string
 }
 
 export type EventList = Paginator<Event>

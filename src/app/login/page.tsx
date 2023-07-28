@@ -2,7 +2,6 @@
 import React from "react"
 import { Button, Input } from "@nextui-org/react"
 import { motion } from "framer-motion"
-
 export default function LoginPage() {
   return (
     <div className="p-4 flex items-center justify-center min-h-screen">

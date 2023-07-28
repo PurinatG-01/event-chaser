@@ -37,6 +37,7 @@ export default function useQuery() {
     token?: string
   ) => {
     const instance = createInstance(token || Cookies.get(COOKIES_JWT_NAME))
+
     return await instance.request<ApiResponse<T>>({
       url,
       ...options,

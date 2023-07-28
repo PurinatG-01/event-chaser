@@ -10,7 +10,7 @@ export default function useLogin() {
   const { jwt, removeAuthCookie, setAuthCookie } = useAuth()
   const query = useQuery()
   const [isLoginLoading, setIsLoginLoading] = useState<boolean>(false)
-  const [isLoginError, setIsLoginError] = useState<string>("")
+  const [loginError, setIsLoginError] = useState<string>("")
 
   const login = async (username: string, password: string) => {
     setIsLoginLoading(true)
@@ -28,6 +28,7 @@ export default function useLogin() {
           throw new Error("Token not found")
         } else {
           setAuthCookie(token)
+          setIsLoginError("")
         }
       }
     } catch (error) {
@@ -41,5 +42,5 @@ export default function useLogin() {
   const logout = () => {
     removeAuthCookie()
   }
-  return { jwt, login, logout, isLoginError, isLoginLoading }
+  return { jwt, login, logout, loginError, isLoginLoading }
 }

@@ -1,8 +1,16 @@
-import Image from 'next/image'
+"use client"
+import { useEffect } from "react"
+import EventGridList from "~/components/EventGridList"
+import useEventList from "~/hooks/useEventList"
 
 export default function Home() {
+  const { eventList, queryEventList } = useEventList()
+  useEffect(() => {
+    queryEventList(1)
+  }, [])
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
-    </main>
+    <div className="flex flex-col">
+      <EventGridList list={eventList} />
+    </div>
   )
 }

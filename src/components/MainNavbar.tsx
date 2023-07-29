@@ -7,7 +7,7 @@ export default function MainNavbar() {
   const path = usePathname()
   const { username, isLogin, avatarUrl } = useUser()
   return path?.includes("/login") ? null : (
-    <Navbar isBordered variant="floating">
+    <Navbar className="!shadow-none" variant="sticky">
       <Navbar.Brand>
         <Text b color="inherit">
           Event Chaser

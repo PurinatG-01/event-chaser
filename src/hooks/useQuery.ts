@@ -28,6 +28,7 @@ export default function useQuery() {
     return axios.create({
       baseURL,
       headers,
+      withCredentials: true,
     })
   }
 

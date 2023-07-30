@@ -1,17 +1,19 @@
 import React from "react"
-import { Button, Navbar, Link, Text, Avatar } from "@nextui-org/react"
+import { Button, Navbar, Text, Avatar, Link as NLink } from "@nextui-org/react"
 import { useRouter, usePathname } from "next/navigation"
 import useUser from "~/hooks/useUser"
+import Link from "next/link"
 
 const navList = [
   { title: "Home", link: "/" },
   { title: "List", link: "/list" },
 ]
+const NextLink = Link
 export default function MainNavbar() {
   const path = usePathname()
   const { username, isLogin, avatarUrl } = useUser()
   return path?.includes("/login") ? null : (
-    <Navbar bordered variant="sticky" className="!shadow-none">
+    <Navbar variant="sticky" className="!shadow-none">
       <Navbar.Brand>
         <Navbar.Toggle
           showIn="xs"
@@ -26,29 +28,33 @@ export default function MainNavbar() {
       </Navbar.Brand>
       <Navbar.Content hideIn="xs">
         {navList.map((item, index) => (
-          <Navbar.Link key={index} href={item.link}>
+          <Link
+            className={`${
+              path == item.link ? "font-bold border-black" : ""
+            } text-black`}
+            key={index}
+            href={item.link}
+          >
             {item.title}
-          </Navbar.Link>
+          </Link>
         ))}
       </Navbar.Content>
-      <Navbar.Collapse className="!mr-4">
+      <Navbar.Collapse showIn="xs" className="!mr-4">
         {navList.map((item, index) => (
           <Navbar.CollapseItem key={index}>
-            <Link
-              color="inherit"
-              css={{
-                minWidth: "100%",
-              }}
+            <NLink
+              isActive={path == item.link}
+              className={`!text-black`}
               href={item.link}
             >
               {item.title}
-            </Link>
+            </NLink>
           </Navbar.CollapseItem>
         ))}
       </Navbar.Collapse>
       <Navbar.Content>
         {isLogin ? (
-          <Navbar.Link href="#">
+          <NextLink href="#" className="text-black flex gap-1">
             <Avatar
               color="gradient"
               src={avatarUrl}
@@ -56,11 +62,11 @@ export default function MainNavbar() {
               className="!mr-2"
             />{" "}
             {username}
-          </Navbar.Link>
+          </NextLink>
         ) : (
-          <Navbar.Link color="inherit" href="/login">
+          <NextLink className="text-black" href="/login">
             Login
-          </Navbar.Link>
+          </NextLink>
         )}
       </Navbar.Content>
     </Navbar>

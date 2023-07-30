@@ -1,0 +1,22 @@
+.swiper-slide:not(.swiper-slide-active) {
+  transform: scale(0.8) !important;
+}
+.swiper-slide:not(
+    .swiper-slide-next,
+    .swiper-slide-prev,
+    .swiper-slide-active
+  ) {
+  opacity: 0.3 !important;
+  transform: scale(0.7) !important;
+}
+.swiper-slide {
+  transition: all 0.3s ease-in-out;
+}
+
+.swiper-wrapper {
+  padding: 16px 0 48px;
+}
+
+.swiper {
+  width: 100%;
+}

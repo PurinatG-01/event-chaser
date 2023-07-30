@@ -7,18 +7,20 @@ export default function useEventList() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>("")
   const [eventList, setEventList] = useState<Event[]>([])
+  const [totalPage, setTotalPage] = useState<number>(1)
 
   const queryEventList = async (page: number) => {
     setIsLoading(true)
     try {
-      const { data } = await query<EventList>("/event/list")
+      const { data } = await query<EventList>("/event/list", {
+        params: {
+          page,
+        },
+      })
       if (data.data) {
         const _eventList = data.data.list ?? []
-        if (page > 1) {
-          setEventList([...eventList, ..._eventList])
-        } else {
-          setEventList([..._eventList])
-        }
+        setTotalPage(Math.ceil(data.data.total_rows / data.data.limit) ?? 1)
+        setEventList([..._eventList])
       } else if (data.error) {
         throw new Error(data.error)
       }
@@ -29,5 +31,5 @@ export default function useEventList() {
       setIsLoading(false)
     }
   }
-  return { error, isLoading, eventList, queryEventList }
+  return { error, isLoading, eventList, queryEventList, totalPage }
 }

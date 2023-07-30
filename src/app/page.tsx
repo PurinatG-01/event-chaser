@@ -1,25 +1,21 @@
 "use client"
-import { Button, Container, Text } from "@nextui-org/react"
-import MainLayout from "~/layouts/MainLayout"
+import { Text } from "@nextui-org/react"
 import { motion } from "framer-motion"
+import Link from "next/link"
+import PageWrapper from "~/components/PageWrapper"
+
+const ExploreButton = motion(Link)
 const HeroTitle = motion(Text)
+
 export default function Home() {
   return (
-    <MainLayout>
+    <PageWrapper>
       <div className="relative items-center justify-around flex flex-grow container py-4 !max-w-[1400px] mx-auto">
-        <motion.section
-          initial={{ y: -20, opacity: 0, clipPath: "circle(0.3% at 0 0)" }}
-          animate={{ y: 0, opacity: 1, clipPath: "circle(140.9% at 0 0)" }}
-          transition={{ duration: 1.5 }}
-          className="flex flex-col hero-section px-4 pb-[20vw] md:pb-4 pt-[76px] gap-4 justify-center md:justify-start"
-        >
+        <motion.section className="flex flex-col hero-section px-4 pb-[20vw] md:pb-4 pt-[76px] gap-4 justify-center md:justify-start">
           <HeroTitle
             h1
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 5, repeat: Infinity }}
-            css={{
-              textGradient: "45deg, $blue600 -20%, $pink600 50%",
-            }}
             weight="bold"
             className="text-center md:text-left text-[60px] md:text-[120px]"
           >
@@ -33,24 +29,18 @@ export default function Home() {
             unparalleled selection. Join the chase today!.
           </p>
           <div className="self-center md:self-start flex gap-4 flex-wrap items-center justify-center md:justify-start max-w-[500px] w-full">
-            <Button
-              as="a"
+            <ExploreButton
+              className="rounded-md px-4 py-2 border border-black text-black flex-grow text-center
+            hover:bg-black hover:text-white transition-all"
               href="/list"
-              className="flex-grow"
-              color="gradient"
-              shadow
             >
               Explore
-            </Button>
-            <Button className="flex-grow" bordered color="gradient">
-              About me
-            </Button>
+            </ExploreButton>
           </div>
         </motion.section>
         <motion.section
-          initial={{ opacity: 0 }}
-          animate={{ y: [0, -10, 0], opacity: 1 }}
-          transition={{ duration: 3 }}
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 5, repeat: Infinity, delay: 0.2 }}
           className="self-end hidden md:block hero-image w-[40vw] h-[50vh] max-h-[500px]"
         >
           <img
@@ -59,6 +49,6 @@ export default function Home() {
           />
         </motion.section>
       </div>
-    </MainLayout>
+    </PageWrapper>
   )
 }

@@ -1,6 +1,6 @@
 import React from "react"
-import { Button, Navbar, Text, Avatar, Link as NLink } from "@nextui-org/react"
-import { useRouter, usePathname } from "next/navigation"
+import { Navbar, Text, Avatar, Link as NLink } from "@nextui-org/react"
+import { usePathname } from "next/navigation"
 import useUser from "~/hooks/useUser"
 import Link from "next/link"
 
@@ -12,7 +12,7 @@ const NextLink = Link
 export default function MainNavbar() {
   const path = usePathname()
   const { username, isLogin, avatarUrl } = useUser()
-  return path?.includes("/login") ? null : (
+  return (
     <Navbar variant="sticky" className="!shadow-none">
       <Navbar.Brand>
         <Navbar.Toggle

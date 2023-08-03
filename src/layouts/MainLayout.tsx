@@ -8,7 +8,7 @@ export default function MainLayout({
 }) {
   return (
     <>
-    <MainNavbar />
+      <MainNavbar />
       <main className="main-container">{children}</main>
     </>
   )

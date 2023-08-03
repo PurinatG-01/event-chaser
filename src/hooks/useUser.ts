@@ -1,5 +1,5 @@
 import jwt_decode from "jwt-decode"
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useAuth } from "~/provider/useAuth"
 
 interface JWT_DECODED {

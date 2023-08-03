@@ -6,7 +6,7 @@ import useLogin from "~/hooks/useLogin"
 import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
-  const { login, jwt, isLoginLoading, loginError } = useLogin()
+  const { login, isLoginLoading, loginError } = useLogin()
   const router = useRouter()
   const [formValue, setFormValue] = useState<{
     username: string

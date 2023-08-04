@@ -1,6 +1,8 @@
-import { Card, Col, Row, Button, Text, Badge } from "@nextui-org/react"
+import { Card, Col, Row, Text, Badge } from "@nextui-org/react"
 import { Event } from "~/models/Event"
 import { motion } from "framer-motion"
+import Link from "next/link"
+
 const CardContainer = motion(Card)
 export default function EventCard(props: Props) {
   const { event, isTopCard } = props
@@ -9,10 +11,11 @@ export default function EventCard(props: Props) {
       css={{ w: "100%", h: "400px" }}
       whileHover={{ y: -8 }}
       transition={{ duration: 0.2 }}
-      className={`cursor-pointer !hadow-none !border-none ${
+      className={`cursor-pointer !hadow-none !border-none !relative ${
         isTopCard ? "!border-8 !border-[#ffba3b]" : ""
       }`}
     >
+      <Link href={`/event/${event.id}`} className="z-10 absolute top-0 left-0 w-full h-full" />
       {isTopCard && (
         <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
           <Badge enableShadow disableOutline color="warning">
@@ -48,25 +51,6 @@ export default function EventCard(props: Props) {
             <Text color="#000" size={12} className="line-clamp-1">
               {event.description}
             </Text>
-          </Col>
-          <Col className="w-full md:flex-auto md:!w-auto">
-            <Row className="w-full md:flex-end md:w-auto flex">
-              <Button
-                auto
-                rounded
-                color="warning"
-                className="!w-full md:!w-auto"
-              >
-                <Text
-                  css={{ color: "inherit" }}
-                  size={12}
-                  weight="bold"
-                  transform="uppercase"
-                >
-                  Purchase
-                </Text>
-              </Button>
-            </Row>
           </Col>
         </Row>
       </Card.Footer>

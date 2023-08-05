@@ -8,12 +8,12 @@ export default function MainLayout({
 }) {
   return (
     <>
-      <marquee>
+      {/* <marquee>
         Please don't mind UX/UI design... I didn't plan it just want to make all
         of the flows complete... 😢
-      </marquee>
+      </marquee> */}
       <MainNavbar />
-      <main className="main-container">{children}</main>
+      <main className="main-container pt-12 ">{children}</main>
     </>
   )
 }

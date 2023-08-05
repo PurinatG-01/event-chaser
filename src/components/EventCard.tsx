@@ -1,29 +1,28 @@
-import { Card, Col, Row, Text, Badge } from "@nextui-org/react"
 import { Event } from "~/models/Event"
 import { motion } from "framer-motion"
 import Link from "next/link"
 
-const CardContainer = motion(Card)
+const CardContainer = motion.div
 export default function EventCard(props: Props) {
   const { event, isTopCard } = props
   return (
     <CardContainer
-      css={{ w: "100%", h: "400px" }}
       whileHover={{ y: -8 }}
       transition={{ duration: 0.2 }}
-      className={`cursor-pointer !hadow-none !border-none !relative ${
+      className={`w-full h-[400px] cursor-pointer !hadow-none !border-none !relative ${
         isTopCard ? "!border-8 !border-[#ffba3b]" : ""
       }`}
     >
       <Link href={`/event/${event.id}`} className="z-10 absolute top-0 left-0 w-full h-full" />
       {isTopCard && (
-        <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
-          <Badge enableShadow disableOutline color="warning">
-            Top Event
-          </Badge>
-        </Card.Header>
+        // <Card.Header css={{ position: "absolute", zIndex: 1, top: 5 }}>
+        //   <Badge enableShadow disableOutline color="warning">
+        //     Top Event
+        //   </Badge>
+        // </Card.Header>
+        <></>
       )}
-      <Card.Body css={{ p: 0 }}>
+      {/* <Card.Body css={{ p: 0 }}>
         <Card.Image
           src={`${event.thumbnail}?index=${event.id}`}
           width="100%"
@@ -31,9 +30,9 @@ export default function EventCard(props: Props) {
           objectFit="cover"
           alt="Card example background"
         />
-      </Card.Body>
+      </Card.Body> */}
       {/* {!isTopCard && ( */}
-      <Card.Footer
+      {/* <Card.Footer
         isBlurred
         css={{
           position: "absolute",
@@ -53,7 +52,7 @@ export default function EventCard(props: Props) {
             </Text>
           </Col>
         </Row>
-      </Card.Footer>
+      </Card.Footer> */}
       {/* )} */}
     </CardContainer>
   )

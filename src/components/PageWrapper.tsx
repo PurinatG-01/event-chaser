@@ -18,14 +18,14 @@ export default function PageWrapper({
         initial={{ clipPath: "polygon(0 1%, 100% 0, 100% 100%, 0% 100%)" }}
         animate={{ clipPath: "polygon(0 1%, 0 0, 0 100%, 0% 100%)" }}
         exit={{ clipPath: "polygon(0 1%, 100% 0, 100% 100%, 0% 100%)" }}
-        className="bg-white top-0 left-0 absolute w-[50vw] h-screen z-[50]"
+        className="top-0 left-0 absolute w-[50vw] h-screen z-[50]"
       ></motion.div>
       <motion.div
         transition={{ duration: 0.7 }}
         initial={{ clipPath: "polygon(0 1%, 100% 0, 100% 100%, 0 100%)" }}
         animate={{ clipPath: "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)" }}
         exit={{ clipPath: "polygon(0 1%, 100% 0, 100% 100%, 0 100%)" }}
-        className="bg-white top-0 right-0 absolute w-[50vw] h-screen z-[50]"
+        className="top-0 right-0 absolute w-[50vw] h-screen z-[50]"
       ></motion.div>
       {children}
     </motion.div>

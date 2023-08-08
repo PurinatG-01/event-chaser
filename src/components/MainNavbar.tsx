@@ -51,7 +51,7 @@ export default function MainNavbar() {
               ))}
             </ul>
           </div>
-          <a className="btn btn-ghost normal-case text-xl">Event Chaser</a>
+          <Link href="/" className="btn btn-ghost normal-case text-xl">Event Chaser</Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul key={clickIndexer} className="menu menu-horizontal px-1">
@@ -119,7 +119,6 @@ export default function MainNavbar() {
                     Transactions
                   </Link>
                 </li>
-                {/* <div className="divider" /> */}
                 <li>
                   <Link href="/logout" onClick={updateClickIndexer}>
                     Signout
@@ -128,7 +127,7 @@ export default function MainNavbar() {
               </ul>
             </div>
           ) : (
-            <button className="btn">Sign in</button>
+            <Link href="/login" className="btn">Sign in</Link>
           )}
         </div>
       </div>

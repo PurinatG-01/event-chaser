@@ -8,8 +8,6 @@ import { Autoplay, Pagination as SwiperPagination } from "swiper/modules"
 import EventCard from "~/components/EventCard"
 import { motion } from "framer-motion"
 
-const SectionTitle = motion.h2
-
 import "./list.css"
 import "swiper/css"
 import "swiper/css/autoplay"
@@ -19,22 +17,27 @@ export default function ListPage() {
   const { eventList: topEventList, queryEventList: queryTopEventList } =
     useEventList()
   const { eventList, queryEventList, totalPage, isLoading } = useEventList()
-  const [allEventPage, setAllEventPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     queryTopEventList(1)
     queryEventList(1)
   }, [])
 
-  const onChangePagination = (page: number) => {
-    queryEventList(page)
-    setAllEventPage(page)
+  const onChangePagination = (action: "prev" | "next") => {
+    if (action == "next" && currentPage < totalPage) {
+      setCurrentPage(currentPage + 1)
+      queryEventList(currentPage)
+    } else if (action == "prev" && currentPage > 1) {
+      setCurrentPage(currentPage - 1)
+      queryEventList(currentPage)
+    }
   }
   return (
     <PageWrapper>
       <div className="flex flex-col py-4 !max-w-[1400px] mx-auto">
         <div className="px-4 py-4 !w-full">
-          <SectionTitle>Top Events</SectionTitle>
+          <motion.h2 className="text-2xl font-bold">Top Events</motion.h2>
           <Swiper
             modules={[Autoplay, SwiperPagination]}
             slidesPerView={1}
@@ -64,16 +67,24 @@ export default function ListPage() {
       </div>
       <div className="flex flex-col">
         <div className="px-4 py-8 !max-w-[1400px] mx-auto !w-full">
-          <SectionTitle className="flex justify-between flex-wrap items-center">
+          <motion.h2 className="text-2xl font-bold flex mb-4 justify-between flex-wrap items-center">
             All Events
-            {/* <Pagination
-              className="ml-auto"
-              total={totalPage}
-              initialPage={1}
-              page={allEventPage}
-              onChange={onChangePagination}
-            /> */}
-          </SectionTitle>
+            <div className="join ml-auto">
+              <button
+                className="join-item btn"
+                onClick={() => onChangePagination("prev")}
+              >
+                «
+              </button>
+              <button className="join-item btn">Page {currentPage}</button>
+              <button
+                className="join-item btn"
+                onClick={() => onChangePagination("next")}
+              >
+                »
+              </button>
+            </div>
+          </motion.h2>
           {isLoading ? (
             <div className="h-[50vh] flex items-center justify-center">
               {/* <Loading type="points" size="xl" /> */}
@@ -82,13 +93,21 @@ export default function ListPage() {
             <EventGridList list={eventList} />
           )}
           <div className="flex w-full justify-center md:justify-end">
-            {/* <Pagination
-              className="!mt-4 ml-auto"
-              total={totalPage}
-              initialPage={1}
-              page={allEventPage}
-              onChange={onChangePagination}
-            /> */}
+            <div className="join mt-4 ml-auto">
+              <button
+                className="join-item btn"
+                onClick={() => onChangePagination("prev")}
+              >
+                «
+              </button>
+              <button className="join-item btn">Page {currentPage}</button>
+              <button
+                className="join-item btn"
+                onClick={() => onChangePagination("next")}
+              >
+                »
+              </button>
+            </div>
           </div>
         </div>
       </div>

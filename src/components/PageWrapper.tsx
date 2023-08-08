@@ -12,6 +12,7 @@ export default function PageWrapper({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.7 }}
+      className="pt-16"
     >
       <motion.div
         transition={{ duration: 0.7 }}

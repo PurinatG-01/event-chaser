@@ -12,6 +12,7 @@ import "./list.css"
 import "swiper/css"
 import "swiper/css/autoplay"
 import "swiper/css/pagination"
+import TopEventSection from "~/components/section/TopEventSection"
 
 export default function ListPage() {
   const { eventList: topEventList, queryEventList: queryTopEventList } =
@@ -36,7 +37,7 @@ export default function ListPage() {
   return (
     <PageWrapper>
       <div className="flex flex-col py-4 !max-w-[1400px] mx-auto">
-        <div className="px-4 py-4 !w-full">
+        {/* <div className="px-4 py-4 !w-full">
           <motion.h2 className="text-2xl font-bold">Top Events</motion.h2>
           <Swiper
             modules={[Autoplay, SwiperPagination]}
@@ -63,7 +64,8 @@ export default function ListPage() {
               </SwiperSlide>
             ))}
           </Swiper>
-        </div>
+        </div> */}
+        <TopEventSection eventList={topEventList} />
       </div>
       <div className="flex flex-col">
         <div className="px-4 py-8 !max-w-[1400px] mx-auto !w-full">

@@ -9,7 +9,7 @@ const HeroTitle = motion.h1
 export default function Home() {
   return (
     <PageWrapper>
-      <div className="relative items-center justify-around flex flex-grow container py-4 !max-w-[1400px] mx-auto">
+      <div className="min-h-[80vh] relative items-center justify-around flex flex-grow container py-4 !max-w-[1400px] mx-auto">
         <motion.section className="flex flex-col hero-section px-4 pb-[20vw] md:pb-4 pt-[76px] gap-4 justify-center md:justify-start">
           <HeroTitle
             animate={{ y: [0, -10, 0] }}
@@ -34,7 +34,7 @@ export default function Home() {
         <motion.section
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 5, repeat: Infinity, delay: 0.2 }}
-          className="self-end hidden md:block hero-image w-[40vw] h-[50vh] max-h-[500px]"
+          className="self-end hidden mb-[10vh] md:block hero-image w-[40vw] h-[50vh] max-h-[500px]"
         >
           <img
             className="w-full h-full object-contain"

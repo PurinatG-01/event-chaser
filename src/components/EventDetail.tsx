@@ -11,56 +11,48 @@ export default function EventDetail({ event }: { event: Event }) {
       className="py-[100px] rounded-2xl event-detail-article flex flex-col p-4 max-w-[600px] mx-auto gap-3 pt-8 mt-8"
       id={articleId}
     >
-      <Image
+      <img
         src={event.thumbnail}
-        width={500}
-        height={500}
         alt={event.title}
-        className="event-detail-article__image mx-auto rounded-lg overflow-hidden mb-4"
+        className="max-h-[500px] event-detail-article__image mx-auto rounded-lg overflow-hidden mb-4"
       />
-      <h2>{event.title}</h2>
+      <h3 className="text-4xl font-bold">{event.title}</h3>
       <p>{event.description}</p>
-      <h3>Tickets</h3>
-      <div className="flex gap-2 flex-wrap">
-        <span className="px-2 py-1 rounded-[24px] text-[#232323] flex items-center justify-center bg-[#e4e4e4]">
-          Total tickets : &nbsp;<strong>{event.totalTickets} ea</strong>
-        </span>
-        <span className="px-2 py-1 rounded-[24px] text-[#ffffff] flex items-center justify-center bg-[#ffb236]">
-          Ticket price : &nbsp;<strong>{event.ticketPrice} THB</strong>
-        </span>
+      <div className="stats stats-vertical lg:stats-horizontal shadow-lg border border-base-200">
+        <div className="stat">
+          <div className="stat-title">Started</div>
+          <div className="stat-value text-base">
+            {dayjs(event.startedAt).format("D MMM YYYY HH:mm")}
+          </div>
+        </div>
+
+        <div className="stat">
+          <div className="stat-title">Ended</div>
+          <div className="stat-value text-base">
+            {" "}
+            {dayjs(event.endedAt).format("D MMM YYYY HH:mm")}
+          </div>
+        </div>
+
+        <div className="stat">
+          <div className="stat-title">Ticket price</div>
+          <div className="stat-value text-lg text-yellow-500">
+            {event.ticketPrice} THB
+          </div>
+          <div className="stat-desc">Total tickets: {event.totalTickets}</div>
+        </div>
       </div>
-      <h3>Date</h3>
-      <div className="flex gap-2 flex-wrap">
-        <span className="px-2 py-1 rounded-[24px] text-[#ffffff] flex items-center justify-center bg-[#30e36f]">
-          Started at : &nbsp;
-          <strong>
-            {dayjs(event.startedAt).format("DD MMM YYYY / HH:mm")}
-          </strong>
-        </span>
-        <span className="px-2 py-1 rounded-[24px] text-[#ffffff] flex items-center justify-center bg-[#ff7474]">
-          Ended at : &nbsp;
-          <strong>{dayjs(event.endedAt).format("DD MMM YYYY / HH:mm")}</strong>
-        </span>
-        <span className="px-2 py-1 rounded-[24px] text-[#ffffff] flex items-center justify-center bg-[#ffb236]">
-          Released at : &nbsp;
-          <strong>
-            {dayjs(event.releasedAt).format("DD MMM YYYY / HH:mm")}
-          </strong>
-        </span>
-      </div>
-      <div className="mx-auto p-2 justify-center items-center flex z-10 left-0 bottom-0 fixed shadow-xl w-screen bg-base-100">
+      <div className="mx-auto w-full mt-4 justify-center items-center flex shadow-xl">
         <button
           className={`max-w-[600px] w-full rounded-lg active:scale-[0.95] transition-all flex items-center justify-center active:opacity-70 hover:opacity-70
-        font-semibold bg-[#30e36f] text-bold text-white mt-auto px-4 py-2 relative ${
+        font-semibold bg-green-400 text-bold text-white mt-auto px-4 py-2 relative ${
           event.ticketPrice <= 0 ? "opacity-50 !bg-slate-400" : ""
         }`}
           disabled={event.ticketPrice <= 0}
         >
           <Link
             href={`/event/${event.id}/purchase`}
-            className={`z-10 top-0 left-0 absolute w-full h-full ${
-              event.ticketPrice <= 0 ? "pointer-events-none" : ""
-            }`}
+            className={`${event.ticketPrice <= 0 ? "pointer-events-none" : ""}`}
           ></Link>
           {event.ticketPrice <= 0 ? "Unable to purchase" : "Purchase"}
         </button>

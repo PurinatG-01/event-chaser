@@ -1,5 +1,6 @@
 import React from "react"
 import EventDetail from "~/components/EventDetail"
+import PageWrapper from "~/components/PageWrapper"
 import { Event } from "~/models/Event"
 import query from "~/utils/query"
 
@@ -30,9 +31,11 @@ export default async function EventByIdPage({
   return (
     <>
       {event ? (
-        <div className="event-detail-page" id={pageId}>
-          <EventDetail event={event} />
-        </div>
+        <PageWrapper>
+          <div className="event-detail-page" id={pageId}>
+            <EventDetail event={event} />
+          </div>
+        </PageWrapper>
       ) : (
         <></>
       )}

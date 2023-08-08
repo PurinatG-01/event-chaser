@@ -48,7 +48,7 @@ export default function EventDetail({ event }: { event: Event }) {
           </strong>
         </span>
       </div>
-      <div className="mx-auto p-2 justify-center items-center flex z-10 left-0 bottom-0 fixed shadow-xl w-screen bg-[#ffffff]">
+      <div className="mx-auto p-2 justify-center items-center flex z-10 left-0 bottom-0 fixed shadow-xl w-screen bg-base-100">
         <button
           className={`max-w-[600px] w-full rounded-lg active:scale-[0.95] transition-all flex items-center justify-center active:opacity-70 hover:opacity-70
         font-semibold bg-[#30e36f] text-bold text-white mt-auto px-4 py-2 relative ${

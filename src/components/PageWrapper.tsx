@@ -32,7 +32,7 @@ export default function PageWrapper({
           className="top-0 right-0 absolute w-[50vw] h-screen z-[50]"
         ></motion.div>
         {children}
-        <footer className="footer flex justify-between p-10 bg-neutral text-neutral-content">
+        <footer className="footer flex justify-between p-10 bg-neutral text-neutral-content mt-auto">
           <div className="max-w-[1400px] w-screen mx-auto flex justify-between items-stretch h-full">
             <div className="flex flex-col gap-2">
               <svg

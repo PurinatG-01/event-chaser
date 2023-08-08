@@ -13,8 +13,8 @@ export default function TopEventSection(props: Props) {
         {resolvedEventList.map((event, index) => (
           <li className={`h-[20vh] md:h-[50vh]`} key={event.id}>
             <motion.div
-                      animate={{ opacity: [0, 1] }}
-                      transition={{ duration: 0.5, delay: index * 0.2 }}
+              animate={{ opacity: [0, 1] }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
               className="stack h-full w-full"
               data-index={index + 1}
             >

@@ -36,35 +36,7 @@ export default function ListPage() {
   }
   return (
     <PageWrapper>
-      <div className="flex flex-col py-4 !max-w-[1400px] mx-auto">
-        {/* <div className="px-4 py-4 !w-full">
-          <motion.h2 className="text-2xl font-bold">Top Events</motion.h2>
-          <Swiper
-            modules={[Autoplay, SwiperPagination]}
-            slidesPerView={1}
-            centeredSlides
-            loop
-            navigation
-            pagination={{ clickable: true }}
-            breakpoints={{
-              400: {
-                slidesPerView: 1,
-              },
-              768: {
-                slidesPerView: 3,
-              },
-            }}
-            autoplay={{
-              delay: 2000,
-            }}
-          >
-            {topEventList.map((event, index) => (
-              <SwiperSlide className="top-slide" key={index}>
-                <EventCard isTopCard event={event} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div> */}
+      <div className="flex flex-col py-4 !max-w-[1400px] mx-auto w-full">
         <TopEventSection eventList={topEventList} />
       </div>
       <div className="flex flex-col">

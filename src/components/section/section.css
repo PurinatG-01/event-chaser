@@ -1,0 +1,62 @@
+.top-card::before {
+  content: " ";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: rgb(0, 0, 0);
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.7) 10%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+#top-section .stack {
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+#top-section .stack:hover {
+  cursor: pointer;
+  transform: translateY(-16px);
+}
+#top-section .stack::before {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  z-index: 20;
+  padding: 8px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background-color: #ffc13a;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  opacity: 0.8;
+}
+
+#top-section .stack:nth-child(1)::before {
+  content: attr(data-index);
+}
+
+@media (min-width: 768px) {
+  #top-section li:nth-child(1) {
+    transform: translateY(0) !important;
+  }
+
+  #top-section li:nth-child(2) {
+    transform: translateY(40px) !important;
+  }
+
+  #top-section li:nth-child(3) {
+    transform: translateY(80px) !important;
+  }
+}

@@ -1,7 +1,6 @@
 import { Event } from "~/models/Event"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import Image from "next/image"
 
 const CardContainer = motion.div
 export default function EventCard(props: Props) {
@@ -10,7 +9,7 @@ export default function EventCard(props: Props) {
     <CardContainer
       whileHover={{ y: -8 }}
       transition={{ duration: 0.2 }}
-      className={`overflow-hidden shadow-lg card w-full h-full cursor-pointer !hadow-none !border-none !relative ${
+      className={`rounded-xl overflow-hidden shadow-lg card w-full h-full cursor-pointer !hadow-none !border-none !relative ${
         isTopCard ? "!border-8 !border-[#ffba3b]" : ""
       }`}
     >

@@ -28,6 +28,11 @@ export default function useUser() {
       setUserId(id)
       setAvatarUrl(displayImgUrl)
       setIsLogin(!!jwt)
+    }else{
+      setUserName("")
+      setUserId(0)
+      setAvatarUrl("")
+      setIsLogin(false)
     }
   }, [jwt])
   return { username, userId, isLogin, avatarUrl }

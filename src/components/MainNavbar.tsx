@@ -1,8 +1,9 @@
-import React from "react"
+import React, { useState } from "react"
 import { usePathname } from "next/navigation"
 import useUser from "~/hooks/useUser"
 import Link from "next/link"
 import Image from "next/image"
+import useLogin from "~/hooks/useLogin"
 
 const navList = [
   { title: "Home", link: "/" },
@@ -12,46 +13,59 @@ const NextLink = Link
 export default function MainNavbar() {
   const path = usePathname()
   const { username, userId, isLogin, avatarUrl } = useUser()
-  const [clickIndexer, setClickIndexer] = React.useState(0)
+  const { logout } = useLogin()
+  const [clickIndexer, setClickIndexer] = useState(0)
   const updateClickIndexer = () => {
     setClickIndexer(clickIndexer + 1)
+  }
+  const onClickSignOut = () => {
+    logout()
+    updateClickIndexer()
   }
   return (
     <div className="navbar-container fixed z-50 w-full max-w-[1400px] top-0 left-[50%] translate-x-[-50%] mx-auto">
       <div className="navbar bg-base-100">
         <div className="navbar-start">
-          <div className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+          <div className="drawer w-auto" key={clickIndexer}>
+            <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content">
+              <label
+                htmlFor="my-drawer"
+                tabIndex={0}
+                className=" drawer-button btn btn-ghost lg:hidden"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </label>
-            <ul
-              key={clickIndexer}
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              {navList.map((nav, index) => (
-                <li key={index}>
-                  <Link href={nav.link} onClick={updateClickIndexer}>
-                    {nav.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h8m-8 6h16"
+                  />
+                </svg>
+              </label>
+            </div>
+            <div className="drawer-side">
+              <label htmlFor="my-drawer" className="drawer-overlay"></label>
+              <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
+                {navList.map((nav, index) => (
+                  <li key={index}>
+                    <Link href={nav.link} onClick={updateClickIndexer}>
+                      {nav.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <Link href="/" className="btn btn-ghost normal-case text-xl">Event Chaser</Link>
+          <Link href="/" className="btn btn-ghost normal-case text-xl">
+            Event Chaser
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul key={clickIndexer} className="menu menu-horizontal px-1">
@@ -105,29 +119,40 @@ export default function MainNavbar() {
                 className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <li className="">
-                  <Link href={`/user/${userId}/profile`}  onClick={updateClickIndexer}>
+                  <Link
+                    href={`/user/${userId}/profile`}
+                    onClick={updateClickIndexer}
+                  >
                     Profile
                   </Link>
                 </li>
                 <li className="">
-                  <Link href={`/user/${userId}/tickets`}  onClick={updateClickIndexer}>
+                  <Link
+                    href={`/user/${userId}/tickets`}
+                    onClick={updateClickIndexer}
+                  >
                     Tickets
                   </Link>
                 </li>
                 <li className="border-b border-base-200">
-                  <Link href={`/user/${userId}/transaction`}  onClick={updateClickIndexer}>
+                  <Link
+                    href={`/user/${userId}/transaction`}
+                    onClick={updateClickIndexer}
+                  >
                     Transactions
                   </Link>
                 </li>
                 <li>
-                  <Link href="/logout" onClick={updateClickIndexer}>
+                  <button onClick={onClickSignOut}>
                     Signout
-                  </Link>
+                  </button>
                 </li>
               </ul>
             </div>
           ) : (
-            <Link href="/login" className="btn">Sign in</Link>
+            <Link href="/login" className="btn">
+              Sign in
+            </Link>
           )}
         </div>
       </div>

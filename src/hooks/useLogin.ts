@@ -42,5 +42,6 @@ export default function useLogin() {
   const logout = () => {
     removeAuthCookie()
   }
+
   return { jwt, login, logout, loginError, isLoginLoading }
 }

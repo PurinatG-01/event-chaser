@@ -60,35 +60,26 @@ export default function LoginPage() {
             className="input input-bordered w-full"
           />
           <div className="form__action flex gap-4 flex-col">
-            <button type="submit" className="btn btn-primary" disabled={isLoginLoading}>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={isLoginLoading}
+            >
               {" "}
               {isLoginLoading && (
                 <span className="loading loading-dots loading-md mr-4"></span>
               )}{" "}
               Sign in
             </button>
-            <button className="btn btn-outline" disabled={isLoginLoading}>
+            <button
+              onClick={() => {
+                router.push("/signup")
+              }}
+              className="btn btn-outline"
+              disabled={isLoginLoading}
+            >
               Sign up
             </button>
-            {/* <Button
-              disabled={isLoginLoading}
-              type="submit"
-              color="primary"
-              className="grow"
-              auto
-            >
-              {isLoginLoading && <Loading size="xs" className="!mr-4" />} Sign
-              in
-            </Button>
-            <Button
-              disabled={isLoginLoading}
-              color="primary"
-              className="grow"
-              bordered
-              auto
-            >
-              Sign up
-            </Button> */}
           </div>
           {loginError && (
             <div className=" text-sm text-center mt-4 rounded-xl bg-red-400 p-2">

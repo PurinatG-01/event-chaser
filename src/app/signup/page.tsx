@@ -10,7 +10,7 @@ interface SignUpUserForm extends UserForm {
 }
 
 export default function SignUpPage() {
-  const { signUp } = useSignUp()
+  const { signUp, isLoading, error } = useSignUp()
   const router = useRouter()
   const [formValue, setFormValue] = useState<SignUpUserForm>({
     username: "",
@@ -23,9 +23,10 @@ export default function SignUpPage() {
 
   const onSubmitLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    let validator = false
+    let validator = true
     for (const [key, value] of Object.entries(formValue)) {
       validator = validator && !!value
+      console.log(value)
       if (!validator) break
     }
     if (formValue.password !== formValue.confirmPassword) {
@@ -37,6 +38,7 @@ export default function SignUpPage() {
       })
     } else {
       // TODO: trigger validator
+      console.log(formValue)
     }
   }
 
@@ -59,7 +61,10 @@ export default function SignUpPage() {
           className="login__form flex flex-col gap-4 "
         >
           <h1 className="text-xl font-bold flex gap-4 items-center">
-            <button className="p-2 py-0 hover:bg-base-300 transition-all rounded-md" onClick={() => router.back()}>
+            <button
+              className="p-2 py-0 hover:bg-base-300 transition-all rounded-md"
+              onClick={() => router.back()}
+            >
               {" "}
               «{" "}
             </button>
@@ -114,17 +119,21 @@ export default function SignUpPage() {
             className="input input-bordered w-full"
           />
           <div className="form__action flex gap-4 flex-col">
-            <button type="submit" className="btn btn-primary" disabled={true}>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={isLoading}
+            >
               {" "}
-              {true && (
+              {isLoading && (
                 <span className="loading loading-dots loading-md mr-4"></span>
               )}{" "}
               Sign Up
             </button>
           </div>
-          {"error" && (
+          {error && (
             <div className=" text-sm text-center mt-4 rounded-xl bg-red-400 p-2">
-              {"error"}
+              {error}
             </div>
           )}
         </form>

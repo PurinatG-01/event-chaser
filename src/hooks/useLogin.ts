@@ -13,8 +13,8 @@ export default function useLogin() {
   const [loginError, setIsLoginError] = useState<string>("")
 
   const login = async (username: string, password: string) => {
-    setIsLoginLoading(true)
     try {
+      setIsLoginLoading(true)
       const formData = new FormData()
       formData.append("username", username)
       formData.append("password", password)
@@ -32,7 +32,6 @@ export default function useLogin() {
         }
       }
     } catch (error) {
-      console.error("> error : ", error)
       setIsLoginError((error as Error).message || "[POST] Login error")
       return Promise.reject(error)
     } finally {

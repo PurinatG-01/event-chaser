@@ -42,7 +42,16 @@ export default function LoginPage() {
           onSubmit={onSubmitLogin}
           className="login__form flex flex-col gap-4 "
         >
-          <h1 className="text-xl font-bold">Event Chaser</h1>
+          <h1 className="text-xl font-bold">
+            <button
+              className="p-2 py-0 hover:bg-base-300 transition-all rounded-md"
+              onClick={() => router.back()}
+            >
+              {" "}
+              «{" "}
+            </button>
+            Event Chaser
+          </h1>
           <input
             type="text"
             onChange={(e) => {

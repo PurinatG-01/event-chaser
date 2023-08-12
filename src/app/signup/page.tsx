@@ -17,7 +17,7 @@ export default function SignUpPage() {
     password: "",
     confirmPassword: "",
     email: "",
-    displayImageUrl: "",
+    displayImgUrl: "",
     displayName: "",
   })
 

@@ -21,25 +21,75 @@ export default function SignUpPage() {
     displayName: "",
   })
 
+  const inputList = [
+    {
+      id: FORM_INPUT_FIELD.USERNAME,
+      name: "Username",
+      type: "text",
+      placeholder: "Username",
+      key: FORM_INPUT_FIELD.USERNAME,
+      errorMessage:
+        "Username should be 3-16 characters and sholudn't include any special characters",
+      required: true,
+      pattern: "^[A-Za-z0-9]{3,16}$",
+    },
+    {
+      id: FORM_INPUT_FIELD.DISPLAY_NAME,
+      name: "Display Name",
+      type: "text",
+      placeholder: "Display Name",
+      errorMessage: "Should contain at least 3-10 characters",
+      key: FORM_INPUT_FIELD.DISPLAY_NAME,
+      required: true,
+      pattern: "^[A-Za-z0-9]{3,10}$",
+    },
+    {
+      id: FORM_INPUT_FIELD.EMAIL,
+      name: "Email",
+      type: "email",
+      placeholder: "Email",
+      key: FORM_INPUT_FIELD.EMAIL,
+      errorMessage: "It should be valid email address",
+      required: true,
+    },
+    {
+      id: FORM_INPUT_FIELD.PASSWORD,
+      name: "Password",
+      type: "password",
+      placeholder: "Password",
+      key: FORM_INPUT_FIELD.PASSWORD,
+      errorMessage:
+        "Password shold be 8-20 characters and include at least 1 letterm 1 number and 1 special character",
+      required: true,
+      pattern: "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[@#$%^&+=!]).{8,20}$",
+    },
+    {
+      id: FORM_INPUT_FIELD.CONFIRM_PASSWORD,
+      name: "Confirm Password",
+      type: "password",
+      placeholder: "Confirm Password",
+      key: FORM_INPUT_FIELD.CONFIRM_PASSWORD,
+      errorMessage: "Password dont't match",
+      required: true,
+      pattern: formValue.password,
+    },
+    {
+      id: FORM_INPUT_FIELD.DISPLAY_IMAGE_URL,
+      name: "Display Image Url",
+      type: "text",
+      placeholder: "Display Image Url",
+      key: FORM_INPUT_FIELD.DISPLAY_IMAGE_URL,
+      errorMessage: "It should be valid url",
+      required: true,
+      pattern: "^(https?://[^s/$.?#]+)[^s]*$",
+    },
+  ]
+
   const onSubmitLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    let validator = true
-    for (const [key, value] of Object.entries(formValue)) {
-      validator = validator && !!value
-      console.log(value)
-      if (!validator) break
-    }
-    if (formValue.password !== formValue.confirmPassword) {
-      validator = false
-    }
-    if (validator) {
-      signUp(formValue).then(() => {
-        router.push("/")
-      })
-    } else {
-      // TODO: trigger validator
-      console.log(formValue)
-    }
+    signUp(formValue).then(() => {
+      router.push("/")
+    })
   }
 
   const onSetFormValue = (key: FORM_INPUT_FIELD, value: string) => {
@@ -70,54 +120,23 @@ export default function SignUpPage() {
             </button>
             Sign up
           </h1>
-          <input
-            type="text"
-            onChange={(e) => {
-              onSetFormValue(FORM_INPUT_FIELD.USERNAME, e.target.value)
-            }}
-            placeholder="Username"
-            className="input input-bordered w-full"
-          />
-          <input
-            type="password"
-            onChange={(e) => {
-              onSetFormValue(FORM_INPUT_FIELD.PASSWORD, e.target.value)
-            }}
-            placeholder="Password"
-            className="input input-bordered w-full"
-          />
-          <input
-            type="password"
-            onChange={(e) => {
-              onSetFormValue(FORM_INPUT_FIELD.CONFIRM_PASSWORD, e.target.value)
-            }}
-            placeholder="Confirm Password"
-            className="input input-bordered w-full"
-          />
-          <input
-            type="text"
-            onChange={(e) => {
-              onSetFormValue(FORM_INPUT_FIELD.EMAIL, e.target.value)
-            }}
-            placeholder="Email"
-            className="input input-bordered w-full"
-          />
-          <input
-            type="text"
-            onChange={(e) => {
-              onSetFormValue(FORM_INPUT_FIELD.DISPLAY_IMAGE_URL, e.target.value)
-            }}
-            placeholder="Display Image Url"
-            className="input input-bordered w-full"
-          />
-          <input
-            type="text"
-            onChange={(e) => {
-              onSetFormValue(FORM_INPUT_FIELD.DISPLAY_NAME, e.target.value)
-            }}
-            placeholder="Display Name"
-            className="input input-bordered w-full"
-          />
+          {inputList.map((input, index) => (
+            <div className="flex flex-col" key={input.key}>
+              <label className="text-sm font-bold mb-2" htmlFor={input.id}>
+                {input.name}
+              </label>
+              <input
+                {...input}
+                className="input input-bordered w-full peer invalid:[&:not(:placeholder-shown):not(:focus)]:input-error"
+                onChange={(e) => {
+                  onSetFormValue(input.key, e.target.value)
+                }}
+              />
+              <span className="text-xs hidden mt-2 text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
+                {input.errorMessage}
+              </span>
+            </div>
+          ))}
           <div className="form__action flex gap-4 flex-col">
             <button
               type="submit"

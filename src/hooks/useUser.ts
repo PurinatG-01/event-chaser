@@ -18,9 +18,10 @@ export default function useUser() {
   const [userId, setUserId] = useState<number>(0)
   const [isLogin, setIsLogin] = useState<boolean>(false)
   const [avatarUrl, setAvatarUrl] = useState<string>("")
+  const [displayName, setDisplayName] = useState<string>("")
   useEffect(() => {
     if (jwt) {
-      const { username, id, displayImgUrl } = jwt_decode<JWT_DECODED>(jwt) ?? {
+      const { username, id, displayImgUrl, displayName } = jwt_decode<JWT_DECODED>(jwt) ?? {
         username: "",
         userId: "",
       }
@@ -28,12 +29,14 @@ export default function useUser() {
       setUserId(id)
       setAvatarUrl(displayImgUrl)
       setIsLogin(!!jwt)
-    }else{
+      setDisplayName(displayName)
+    } else {
       setUserName("")
       setUserId(0)
       setAvatarUrl("")
       setIsLogin(false)
+      setDisplayName("")
     }
   }, [jwt])
-  return { username, userId, isLogin, avatarUrl }
+  return { username, userId, isLogin, avatarUrl, displayName }
 }

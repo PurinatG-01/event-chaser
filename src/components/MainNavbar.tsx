@@ -120,7 +120,7 @@ export default function MainNavbar() {
               >
                 <li className="">
                   <Link
-                    href={`/user/${userId}/profile`}
+                    href={`/account/profile`}
                     onClick={updateClickIndexer}
                   >
                     Profile
@@ -128,7 +128,7 @@ export default function MainNavbar() {
                 </li>
                 <li className="">
                   <Link
-                    href={`/user/${userId}/tickets`}
+                    href={`/account/tickets`}
                     onClick={updateClickIndexer}
                   >
                     Tickets
@@ -136,7 +136,7 @@ export default function MainNavbar() {
                 </li>
                 <li className="border-b border-base-200">
                   <Link
-                    href={`/user/${userId}/transaction`}
+                    href={`/account/history`}
                     onClick={updateClickIndexer}
                   >
                     Transactions

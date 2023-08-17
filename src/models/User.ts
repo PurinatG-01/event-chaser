@@ -14,3 +14,9 @@ export interface UserForm {
   displayImgUrl: string
   displayName: string
 }
+
+export interface UpdateUserForm {
+  email: string
+  displayName: string
+  displayImgUrl: string
+}

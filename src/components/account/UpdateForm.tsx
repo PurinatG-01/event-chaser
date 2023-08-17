@@ -1,14 +1,8 @@
 "use client"
 import React, { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import { useRouter } from "next/navigation"
-import useSignUp from "~/hooks/useSignUp"
-
-interface UpdateUserForm {
-  displayName: string
-  email: string
-  displayImgUrl: string
-}
+import useUpdateUser from "~/hooks/useUpdateUser"
+import { UpdateUserForm } from "~/models/User"
 
 enum DISPLAY_INPUT_FIELD {
   DISPLAY_NAME = "displayName",
@@ -18,8 +12,7 @@ enum DISPLAY_INPUT_FIELD {
 
 export default function UpdateForm(props: { displayForm: UpdateUserForm }) {
   const { displayForm } = props
-  const { signUp, isLoading, error } = useSignUp()
-  const router = useRouter()
+  const { updateUser, isLoading, error } = useUpdateUser()
   const [formValue, setFormValue] = useState<UpdateUserForm>({
     email: displayForm.email,
     displayImgUrl: displayForm.displayImgUrl,
@@ -48,7 +41,6 @@ export default function UpdateForm(props: { displayForm: UpdateUserForm }) {
       placeholder: "Email",
       key: DISPLAY_INPUT_FIELD.EMAIL,
       errorMessage: "It should be valid email address",
-      required: true,
       value: formValue[DISPLAY_INPUT_FIELD.EMAIL]
     },
     {
@@ -66,9 +58,14 @@ export default function UpdateForm(props: { displayForm: UpdateUserForm }) {
 
   const onSubmitLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // signUp(formValue).then(() => {
-    //   router.push("/")
-    // })
+    updateUser(formValue).then(() => {
+      setIsEdit(false)
+      setFormValue({
+        email: displayForm.email,
+        displayImgUrl: displayForm.displayImgUrl,
+        displayName: displayForm.displayName,
+      })
+    })
   }
 
   const onSetFormValue = (key: DISPLAY_INPUT_FIELD, value: string) => {

@@ -136,7 +136,7 @@ export default function MainNavbar() {
                 </li>
                 <li className="border-b border-base-200">
                   <Link
-                    href={`/account/history`}
+                    href={`/account/transactions`}
                     onClick={updateClickIndexer}
                   >
                     Transactions

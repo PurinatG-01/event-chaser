@@ -32,7 +32,7 @@ export default function UpdateForm(props: { displayForm: UpdateUserForm }) {
       key: DISPLAY_INPUT_FIELD.DISPLAY_NAME,
       required: true,
       pattern: "^[A-Za-z0-9]{3,10}$",
-      value: formValue[DISPLAY_INPUT_FIELD.DISPLAY_NAME]
+      value: formValue[DISPLAY_INPUT_FIELD.DISPLAY_NAME],
     },
     {
       id: DISPLAY_INPUT_FIELD.EMAIL,
@@ -41,7 +41,7 @@ export default function UpdateForm(props: { displayForm: UpdateUserForm }) {
       placeholder: "Email",
       key: DISPLAY_INPUT_FIELD.EMAIL,
       errorMessage: "It should be valid email address",
-      value: formValue[DISPLAY_INPUT_FIELD.EMAIL]
+      value: formValue[DISPLAY_INPUT_FIELD.EMAIL],
     },
     {
       id: DISPLAY_INPUT_FIELD.DISPLAY_IMAGE_URL,
@@ -52,7 +52,7 @@ export default function UpdateForm(props: { displayForm: UpdateUserForm }) {
       errorMessage: "It should be valid url",
       required: true,
       pattern: "^(https?://[^s/$.?#]+)[^s]*$",
-      value: formValue[DISPLAY_INPUT_FIELD.DISPLAY_IMAGE_URL]
+      value: formValue[DISPLAY_INPUT_FIELD.DISPLAY_IMAGE_URL],
     },
   ]
 
@@ -77,13 +77,9 @@ export default function UpdateForm(props: { displayForm: UpdateUserForm }) {
 
   return (
     <div className="p-4 flex items-center justify-center w-full">
-      <motion.section
-        initial={{ y: -30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className="flex flex-col gap-4 w-full"
-      >
+      <section className="flex flex-col gap-4 w-full">
         <div className="avatar mx-auto relative">
-          <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+          <div className="w-24 rounded-full ring ring-offset-base-100 ring-offset-base-100 ring-offset-2">
             <img src={formValue.displayImgUrl} />
           </div>
           <button
@@ -158,7 +154,7 @@ export default function UpdateForm(props: { displayForm: UpdateUserForm }) {
             )}
           </form>
         )}
-      </motion.section>
+      </section>
     </div>
   )
 }

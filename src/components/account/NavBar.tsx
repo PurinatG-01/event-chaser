@@ -2,30 +2,7 @@
 import React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-
-export enum TAB {
-  PROFILE = "profile",
-  TICKETS = "tickets",
-  HISTORY = "history",
-}
-
-const TabList = [
-  {
-    id: TAB.PROFILE,
-    title: "Profile",
-    link: "/account/profile",
-  },
-  {
-    id: TAB.TICKETS,
-    title: "Tickets",
-    link: "/account/tickets",
-  },
-  {
-    id: TAB.HISTORY,
-    title: "History",
-    link: "/account/history",
-  },
-]
+import { TabList } from "~/config/account"
 
 export default function Navbar() {
   const pathname = usePathname()

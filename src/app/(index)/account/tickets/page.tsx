@@ -1,15 +1,50 @@
 "use client"
 import { get } from "http"
-import React, { useEffect } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Card } from "~/components/Card"
+import useInfiniteScroll, {
+  IUseInfiniteScroll,
+} from "~/hooks/useInfiniteScroll"
 import useUserTickets from "~/hooks/useUserTickets"
+import { Ticket } from "~/models/Ticket"
 
 export default function AccountTicketsPage() {
-  const { ticketList, getUserTickets } = useUserTickets()
-
-  useEffect(() => {
-    getUserTickets(1, 20)
-  }, [])
+  const { getUserTickets } = useUserTickets()
+  const [ticketList, setTicketList] = useState<Ticket[]>([])
+  const [page, setPage] = useState<number>(1)
+  const targetRef = useRef<HTMLLIElement>(null)
+  const infiniteHandler = async ({
+    isLoading,
+    setIsLoading,
+    setIsComplete,
+  }: IUseInfiniteScroll) => {
+    if (isLoading) return
+    try {
+      setIsLoading(true)
+      const data = await getUserTickets(page, 10)
+      if (data.list) {
+        if (data.list.length == 0) {
+          setIsLoading(false)
+          setIsComplete(true)
+        } else {
+          if (page == 1) {
+            setTicketList([...data.list])
+          } else {
+            setTicketList((prev) => [...prev, ...data.list])
+          }
+        }
+      } else {
+        throw new Error("No more data")
+      }
+    } catch (error) {
+      console.log(error)
+      setIsComplete(true)
+    } finally {
+      setIsLoading(false)
+      setPage(page + 1)
+    }
+  }
+  const { isLoading } = useInfiniteScroll(targetRef, infiniteHandler)
 
   return (
     <div className="flex flex-col items-center p-4 max-w-[1400px] w-full mx-auto">
@@ -41,8 +76,11 @@ export default function AccountTicketsPage() {
             </div>
           </li>
         ))}
-        <li className=" col-start-1 col-end-[-1] p-6 flex items-center justify-center">
-          <div className="loading loading-lg"></div>
+        <li
+          ref={targetRef}
+          className=" col-start-1 col-end-[-1] p-6 flex items-center justify-center"
+        >
+          {isLoading ? <div className="loading loading-lg"></div> : <></>}
         </li>
       </ol>
     </div>

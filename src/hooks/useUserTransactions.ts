@@ -19,7 +19,6 @@ export default function useUserTransactions() {
         },
       })
       if (data.data) {
-        console.log("> data.data.list : ", data.data.list)
         setError("")
         setTransactionList(data.data.list)
         return Promise.resolve(data.data)

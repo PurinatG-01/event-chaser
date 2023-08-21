@@ -1,26 +1,67 @@
 "use client"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import { Card } from "~/components/Card"
 import useInfiniteScroll, {
   IUseInfiniteScroll,
 } from "~/hooks/useInfiniteScroll"
 import useUserTransactions from "~/hooks/useUserTransactions"
-import { Transaction } from "~/models/Transaction"
+import { ORDER_BY } from "~/models/General"
+import { OMISE_CHARGE_STATUS, Transaction } from "~/models/Transaction"
+
+const statusList = [
+  {
+    value: OMISE_CHARGE_STATUS.ALL,
+    title: "All",
+    color: "bg-primary",
+  },
+  {
+    value: OMISE_CHARGE_STATUS.SUCCESSFUL,
+    title: "Success",
+    color: "bg-success",
+  },
+  {
+    value: OMISE_CHARGE_STATUS.FAILED,
+    title: "Failed",
+    color: "bg-error",
+  },
+  {
+    value: OMISE_CHARGE_STATUS.PENDING,
+    title: "Pending",
+    color: "bg-warning",
+  },
+]
 
 export default function AccountTransactionsPage() {
   const { getUserTransactions } = useUserTransactions()
   const [transactionList, setTransactionList] = useState<Transaction[]>([])
   const targetRef = useRef<HTMLLIElement>(null)
   const [page, setPage] = useState<number>(1)
-  const infiniteHandler = async ({
-    isLoading,
-    setIsLoading,
-    setIsComplete,
-  }: IUseInfiniteScroll) => {
+  const [status, setStatus] = useState<OMISE_CHARGE_STATUS>(
+    OMISE_CHARGE_STATUS.ALL
+  )
+  const [orderBy, setOrderBy] = useState<ORDER_BY>(ORDER_BY.DESC)
+  const infiniteHandler = async () => {
+    getTransactions()
+  }
+  const { isLoading, setIsComplete, setIsLoading } = useInfiniteScroll(
+    targetRef,
+    infiniteHandler
+  )
+
+  useEffect(() => {
+    setIsComplete(false)
+    setPage(1)
+    setTransactionList([])
+    setTimeout(() => {
+      getTransactions()
+    }, 0)
+  }, [status, orderBy, setIsComplete])
+
+  const getTransactions = useCallback(async () => {
     if (isLoading) return
     try {
       setIsLoading(true)
-      const data = await getUserTransactions(page, 10)
+      const data = await getUserTransactions(page, 10, status, orderBy)
       if (data.list) {
         if (data.list.length == 0) {
           setIsLoading(false)
@@ -42,8 +83,19 @@ export default function AccountTransactionsPage() {
       setIsLoading(false)
       setPage(page + 1)
     }
+  }, [
+    getUserTransactions,
+    isLoading,
+    page,
+    setIsComplete,
+    setIsLoading,
+    status,
+    orderBy,
+  ])
+
+  const onChangeStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStatus(e.target.value as OMISE_CHARGE_STATUS)
   }
-  const { isLoading } = useInfiniteScroll(targetRef, infiniteHandler)
 
   return (
     <div className="flex flex-col items-center p-4 max-w-[1400px] w-full mx-auto">
@@ -55,52 +107,21 @@ export default function AccountTransactionsPage() {
             Filter by Status
           </div>
           <div className="collapse-content">
-            <form className="w-full">
-              <div className="form-control">
-                <label className="label cursor-pointer">
-                  <span className="label-text">All</span>
-                  <input
-                    type="radio"
-                    name="radio-10"
-                    className="radio checked:bg-primary"
-                    checked
-                  />
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="label cursor-pointer">
-                  <span className="label-text">Pending</span>
-                  <input
-                    type="radio"
-                    name="radio-10"
-                    className="radio checked:bg-yellow-400"
-                    checked
-                  />
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="label cursor-pointer">
-                  <span className="label-text">Success</span>
-                  <input
-                    type="radio"
-                    name="radio-10"
-                    className="radio checked:bg-success"
-                    checked
-                  />
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="label cursor-pointer">
-                  <span className="label-text">Failed</span>
-                  <input
-                    type="radio"
-                    name="radio-10"
-                    className="radio checked:bg-error"
-                    checked
-                  />
-                </label>
-              </div>
-            </form>
+            <div className="w-full" onChange={onChangeStatus}>
+              {statusList.map((status) => (
+                <div className="form-control" key={status.value}>
+                  <label className="label cursor-pointer">
+                    <span className="label-text">{status.title}</span>
+                    <input
+                      type="radio"
+                      name="radio-10"
+                      className={`radio checked:${status.color}`}
+                      value={status.value}
+                    />
+                  </label>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <ol className="grid grid-cols-1 gap-4 w-full">

@@ -1,23 +1,33 @@
 import React, { useState } from "react"
 import useQuery from "./useQuery"
-import { Paginator } from "~/models/General"
-import { Transaction } from "~/models/Transaction"
+import { ORDER_BY, Paginator } from "~/models/General"
+import { OMISE_CHARGE_STATUS, Transaction } from "~/models/Transaction"
 
 export default function useUserTransactions() {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [error, setError] = useState<string>("")
   const [transactionList, setTransactionList] = useState<Transaction[]>([])
   const query = useQuery()
-  const getUserTransactions = async (page: number, limit = 20) => {
+  const getUserTransactions = async (
+    page: number,
+    limit = 20,
+    status: OMISE_CHARGE_STATUS = OMISE_CHARGE_STATUS.ALL,
+    orderBy: ORDER_BY = ORDER_BY.ASC
+  ) => {
     try {
       setIsLoading(true)
-      const { data } = await query<Paginator<Transaction>>("/user/transactions", {
-        method: "GET",
-        params: {
-          page,
-          limit,
-        },
-      })
+      const { data } = await query<Paginator<Transaction>>(
+        "/user/transactions",
+        {
+          method: "GET",
+          params: {
+            page,
+            limit,
+            status,
+            orderBy,
+          },
+        }
+      )
       if (data.data) {
         setError("")
         setTransactionList(data.data.list)

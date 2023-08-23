@@ -1,5 +1,4 @@
 "use client"
-import { get } from "http"
 import React, { useEffect, useRef, useState } from "react"
 import { Card } from "~/components/Card"
 import useInfiniteScroll, {

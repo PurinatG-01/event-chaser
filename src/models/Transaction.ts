@@ -10,3 +10,10 @@ export interface Transaction {
   transactionId: string
   updatedAt: string
 }
+
+export enum OMISE_CHARGE_STATUS {
+  ALL = "all",
+  SUCCESSFUL = "successful",
+  FAILED = "failed",
+  PENDING = "pending",
+}

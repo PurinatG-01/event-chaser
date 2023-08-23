@@ -12,3 +12,8 @@ export interface ApiResponse<T> {
   data: T
   error: string
 }
+
+export enum ORDER_BY {
+  ASC = "asc",
+  DESC = "desc",
+}

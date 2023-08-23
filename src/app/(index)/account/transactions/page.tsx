@@ -13,6 +13,7 @@ const statusList = [
     value: OMISE_CHARGE_STATUS.ALL,
     title: "All",
     color: "bg-primary",
+    checked: true,
   },
   {
     value: OMISE_CHARGE_STATUS.SUCCESSFUL,
@@ -31,6 +32,18 @@ const statusList = [
   },
 ]
 
+const orderByList = [
+  {
+    value: ORDER_BY.ASC,
+    title: "Oldest",
+  },
+  {
+    value: ORDER_BY.DESC,
+    title: "Latest",
+    checked: true,
+  },
+]
+
 export default function AccountTransactionsPage() {
   const { getUserTransactions } = useUserTransactions()
   const [transactionList, setTransactionList] = useState<Transaction[]>([])
@@ -41,60 +54,82 @@ export default function AccountTransactionsPage() {
   )
   const [orderBy, setOrderBy] = useState<ORDER_BY>(ORDER_BY.DESC)
   const infiniteHandler = async () => {
-    getTransactions()
+    setPage(page + 1)
+    setTimeout(() => {
+      getTransactions("handler")
+    }, 300)
   }
   const { isLoading, setIsComplete, setIsLoading } = useInfiniteScroll(
     targetRef,
     infiniteHandler
   )
 
-  useEffect(() => {
+  const resolverStatusActive = useCallback(
+    (_status: OMISE_CHARGE_STATUS) => {
+      return status == _status
+    },
+    [status]
+  )
+
+  const resolverOrderByActive = useCallback(
+    (_orderBy: ORDER_BY) => {
+      return orderBy == _orderBy
+    },
+    [orderBy]
+  )
+
+  const getTransactions = useCallback(
+    async (str: string) => {
+      if (isLoading) return
+      try {
+        setIsLoading(true)
+        const data = await getUserTransactions(page, 10, status, orderBy)
+        if (data.list) {
+          if (data.list.length == 0) {
+            setIsLoading(false)
+            setIsComplete(true)
+          } else {
+            if (page == 1) {
+              setTransactionList([...data.list])
+            } else {
+              setTransactionList((prev) => [...prev, ...data.list])
+            }
+          }
+        } else {
+          throw new Error("No more data")
+        }
+      } catch (error) {
+        console.log(error)
+        setIsComplete(true)
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [
+      getUserTransactions,
+      isLoading,
+      orderBy,
+      page,
+      setIsComplete,
+      setIsLoading,
+      status,
+    ]
+  )
+
+  const onChangeStatus = (val: OMISE_CHARGE_STATUS) => {
+    if (isLoading) return
+    setStatus(val)
     setIsComplete(false)
     setPage(1)
     setTransactionList([])
-    setTimeout(() => {
-      getTransactions()
-    }, 0)
-  }, [status, orderBy, setIsComplete])
+  }
 
-  const getTransactions = useCallback(async () => {
+  const onChangeOrderBy = (val: ORDER_BY) => {
     if (isLoading) return
-    try {
-      setIsLoading(true)
-      const data = await getUserTransactions(page, 10, status, orderBy)
-      if (data.list) {
-        if (data.list.length == 0) {
-          setIsLoading(false)
-          setIsComplete(true)
-        } else {
-          if (page == 1) {
-            setTransactionList([...data.list])
-          } else {
-            setTransactionList((prev) => [...prev, ...data.list])
-          }
-        }
-      } else {
-        throw new Error("No more data")
-      }
-    } catch (error) {
-      console.log(error)
-      setIsComplete(true)
-    } finally {
-      setIsLoading(false)
-      setPage(page + 1)
-    }
-  }, [
-    getUserTransactions,
-    isLoading,
-    page,
-    setIsComplete,
-    setIsLoading,
-    status,
-    orderBy,
-  ])
-
-  const onChangeStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setStatus(e.target.value as OMISE_CHARGE_STATUS)
+    setOrderBy(val)
+    setIsComplete(false)
+    setPage(1)
+    setTransactionList([])
   }
 
   return (
@@ -103,28 +138,49 @@ export default function AccountTransactionsPage() {
       <section className="flex flex-col md:flex-row gap-4 w-full">
         <div className="collapse collapse-arrow  p-4 w-full md:w-auto rounded-2xl border bg-base-100 border-base-300 min-w-[280px] self-start sticky top-20 z-10">
           <input type="checkbox" />
-          <div className="collapse-title text-xl font-medium">
-            Filter by Status
-          </div>
-          <div className="collapse-content">
-            <div className="w-full" onChange={onChangeStatus}>
-              {statusList.map((status) => (
-                <div className="form-control" key={status.value}>
+          <span className="collapse-title text-2xl font-medium">Filter</span>
+          <div className="collapse-content border-t border-base-200">
+            <div className="text-xl font-medium pt-4">Status</div>
+            <form className="w-full">
+              {statusList.map((_status) => (
+                <div className="form-control" key={_status.value}>
                   <label className="label cursor-pointer">
-                    <span className="label-text">{status.title}</span>
+                    <span className="label-text">{_status.title}</span>
                     <input
                       type="radio"
                       name="radio-10"
-                      className={`radio checked:${status.color}`}
-                      value={status.value}
+                      className={`radio`}
+                      value={_status.value}
+                      onClick={() => onChangeStatus(_status.value)}
+                      checked={resolverStatusActive(_status.value)}
                     />
                   </label>
                 </div>
               ))}
-            </div>
+            </form>
+            <div className="divider" />
+
+            <div className="text-xl font-medium">Order by</div>
+            <form className="w-full">
+              {orderByList.map((_order) => (
+                <div className="form-control" key={_order.value}>
+                  <label className="label cursor-pointer">
+                    <span className="label-text">{_order.title}</span>
+                    <input
+                      type="radio"
+                      name="radio-10"
+                      className={`radio`}
+                      value={_order.value}
+                      onClick={() => onChangeOrderBy(_order.value)}
+                      checked={resolverOrderByActive(_order.value)}
+                    />
+                  </label>
+                </div>
+              ))}
+            </form>
           </div>
         </div>
-        <ol className="grid grid-cols-1 gap-4 w-full">
+        <ol className="flex flex-col gap-4 w-full">
           {transactionList.map((transaction) => (
             <li key={transaction.id}>
               <div className="stack w-full">

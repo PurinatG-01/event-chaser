@@ -2,11 +2,13 @@
 import React, { useState } from "react"
 import { motion } from "framer-motion"
 import useLogin from "~/hooks/useLogin"
-import { useRouter } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 
 export default function LoginPage() {
   const { login, isLoginLoading, loginError } = useLogin()
   const router = useRouter()
+  const referrer = useSearchParams()?.get("referrer")
   const [formValue, setFormValue] = useState<{
     username: string
     password: string
@@ -19,7 +21,7 @@ export default function LoginPage() {
     e.preventDefault()
     if (formValue.username && formValue.password) {
       login(formValue.username, formValue.password).then((res) => {
-        router.push("/")
+        referrer ? router.push(referrer) : router.push("/")
       })
     }
   }

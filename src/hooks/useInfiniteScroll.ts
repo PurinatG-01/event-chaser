@@ -41,8 +41,6 @@ export default function useInfiniteScroll(
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           if (!isComplete) loadMoreData()
-          // Unobserve the target after loading
-          if (isComplete) observer.unobserve(entry.target)
         }
       })
     },
@@ -68,6 +66,7 @@ export default function useInfiniteScroll(
       }
     }
   }, [observerCallback, targetRef])
+  
   return {
     isLoading,
     targetRef,

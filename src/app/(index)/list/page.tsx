@@ -36,6 +36,9 @@ export default function ListPage() {
   }
   return (
     <PageWrapper>
+      <h1 className="text-4xl font-bold flex mb-4 justify-between flex-wrap items-center p-4">
+        Event list
+      </h1>
       <div className="flex flex-col py-4 !max-w-[1400px] mx-auto w-full">
         <TopEventSection eventList={topEventList} />
       </div>

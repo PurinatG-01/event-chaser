@@ -26,7 +26,7 @@ export default function EventCard(props: Props) {
         <img className="w-full" src={event.thumbnail} alt="asdasd" />
       </figure>
       <div className="card-body">
-        <h2 className="card-title">{event.title}</h2>
+        <h3 className="card-title">{event.title}</h3>
         <p className="line-clamp-2">{event.description}</p>
       </div>
     </CardContainer>

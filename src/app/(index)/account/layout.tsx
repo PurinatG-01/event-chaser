@@ -1,5 +1,4 @@
-"use client"
-import React, { PropsWithChildren, useEffect } from "react"
+import React, { PropsWithChildren } from "react"
 import PageWrapper from "~/components/PageWrapper"
 import AccountNavbar from "~/components/account/NavBar"
 

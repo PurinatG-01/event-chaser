@@ -36,7 +36,7 @@ export default function AccountTicketsPage() {
         throw new Error("No more data")
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
       setIsComplete(true)
     } finally {
       setIsLoading(false)

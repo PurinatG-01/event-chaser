@@ -17,3 +17,5 @@ export enum ORDER_BY {
   ASC = "asc",
   DESC = "desc",
 }
+
+export const COOKIES_JWT_NAME = "__event-jwt"

@@ -1,18 +1,16 @@
-import React, { useState } from "react"
-import { usePathname } from "next/navigation"
+import React, { useEffect, useState } from "react"
 import useUser from "~/hooks/useUser"
 import Link from "next/link"
 import Image from "next/image"
 import useLogin from "~/hooks/useLogin"
+import { themeChange } from "theme-change"
 
 const navList = [
   { title: "Home", link: "/" },
   { title: "List", link: "/list" },
 ]
-const NextLink = Link
 export default function MainNavbar() {
-  const path = usePathname()
-  const { username, userId, isLogin, avatarUrl } = useUser()
+  const { username, isLogin, avatarUrl } = useUser()
   const { logout } = useLogin()
   const [clickIndexer, setClickIndexer] = useState(0)
   const updateClickIndexer = () => {
@@ -22,6 +20,9 @@ export default function MainNavbar() {
     logout()
     updateClickIndexer()
   }
+  useEffect(() => {
+    themeChange(false)
+  }, [])
   return (
     <div className="navbar-container fixed z-50 w-full max-w-[1400px] top-0 left-[50%] translate-x-[-50%] mx-auto">
       <div className="navbar bg-base-100">
@@ -119,18 +120,12 @@ export default function MainNavbar() {
                 className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
               >
                 <li className="">
-                  <Link
-                    href={`/account/profile`}
-                    onClick={updateClickIndexer}
-                  >
+                  <Link href={`/account/profile`} onClick={updateClickIndexer}>
                     Profile
                   </Link>
                 </li>
                 <li className="">
-                  <Link
-                    href={`/account/tickets`}
-                    onClick={updateClickIndexer}
-                  >
+                  <Link href={`/account/tickets`} onClick={updateClickIndexer}>
                     Tickets
                   </Link>
                 </li>
@@ -143,9 +138,7 @@ export default function MainNavbar() {
                   </Link>
                 </li>
                 <li>
-                  <button onClick={onClickSignOut}>
-                    Signout
-                  </button>
+                  <button onClick={onClickSignOut}>Signout</button>
                 </li>
               </ul>
             </div>

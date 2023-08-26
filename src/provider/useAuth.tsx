@@ -1,6 +1,7 @@
 "use client"
 import { createContext, useContext, useEffect, useState } from "react"
 import Cookies from "js-cookie"
+import { COOKIES_JWT_NAME } from "~/models/General"
 
 interface AuthContextType {
   jwt: string | null
@@ -13,9 +14,6 @@ const AuthContext = createContext<AuthContextType>({
   setAuthCookie: () => {},
   removeAuthCookie: () => {},
 })
-
-export const COOKIES_JWT_NAME = "__event-jwt"
-
 export const useAuth = (): AuthContextType => useContext(AuthContext)
 
 export default function AuthProvider({

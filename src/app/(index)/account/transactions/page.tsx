@@ -1,9 +1,7 @@
 "use client"
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { Card } from "~/components/Card"
-import useInfiniteScroll, {
-  IUseInfiniteScroll,
-} from "~/hooks/useInfiniteScroll"
+import useInfiniteScroll from "~/hooks/useInfiniteScroll"
 import useUserTransactions from "~/hooks/useUserTransactions"
 import { ORDER_BY } from "~/models/General"
 import { OMISE_CHARGE_STATUS, Transaction } from "~/models/Transaction"
@@ -99,7 +97,7 @@ export default function AccountTransactionsPage() {
           throw new Error("No more data")
         }
       } catch (error) {
-        console.log(error)
+        console.error(error)
         setIsComplete(true)
       } finally {
         setIsLoading(false)

@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios"
-import { COOKIES_JWT_NAME } from "~/provider/useAuth"
 import Cookies from "js-cookie"
-import { ApiResponse } from "~/models/General"
+import { ApiResponse, COOKIES_JWT_NAME } from "~/models/General"
 
 export default function query() {
   const baseURL =

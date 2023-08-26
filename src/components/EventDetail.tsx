@@ -16,7 +16,7 @@ export default function EventDetail({ event }: { event: Event }) {
         alt={event.title}
         className="max-h-[500px] event-detail-article__image mx-auto rounded-lg overflow-hidden mb-4"
       />
-      <h3 className="text-4xl font-bold">{event.title}</h3>
+      <h1 className="text-4xl font-bold">{event.title}</h1>
       <p>{event.description}</p>
       <div className="stats stats-vertical border border-base-200 rounded-lg lg:stats-horizontal shadow-lg">
         <div className="stat">

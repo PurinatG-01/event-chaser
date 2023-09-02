@@ -28,8 +28,8 @@ export default function UpdateForm(props: { displayForm: UpdateUserForm }) {
       name: "Display Name",
       type: "text",
       placeholder: "Display Name",
-      errorMessage: "Should contain at least 3-10 characters",
-      key: DISPLAY_INPUT_FIELD.DISPLAY_NAME,
+      errormessage: "Should contain at least 3-10 characters",
+      fieldname: DISPLAY_INPUT_FIELD.DISPLAY_NAME,
       required: true,
       pattern: "^[A-Za-z0-9]{3,10}$",
       value: formValue[DISPLAY_INPUT_FIELD.DISPLAY_NAME],
@@ -39,8 +39,8 @@ export default function UpdateForm(props: { displayForm: UpdateUserForm }) {
       name: "Email",
       type: "email",
       placeholder: "Email",
-      key: DISPLAY_INPUT_FIELD.EMAIL,
-      errorMessage: "It should be valid email address",
+      fieldname: DISPLAY_INPUT_FIELD.EMAIL,
+      errormessage: "It should be valid email address",
       value: formValue[DISPLAY_INPUT_FIELD.EMAIL],
     },
     {
@@ -48,8 +48,8 @@ export default function UpdateForm(props: { displayForm: UpdateUserForm }) {
       name: "Display Image Url",
       type: "text",
       placeholder: "Display Image Url",
-      key: DISPLAY_INPUT_FIELD.DISPLAY_IMAGE_URL,
-      errorMessage: "It should be valid url",
+      fieldname: DISPLAY_INPUT_FIELD.DISPLAY_IMAGE_URL,
+      errormessage: "It should be valid url",
       required: true,
       pattern: "^(https?://[^s/$.?#]+)[^s]*$",
       value: formValue[DISPLAY_INPUT_FIELD.DISPLAY_IMAGE_URL],
@@ -68,10 +68,10 @@ export default function UpdateForm(props: { displayForm: UpdateUserForm }) {
     })
   }
 
-  const onSetFormValue = (key: DISPLAY_INPUT_FIELD, value: string) => {
+  const onSetFormValue = (fieldname: DISPLAY_INPUT_FIELD, value: string) => {
     setFormValue({
       ...formValue,
-      [key]: value,
+      [fieldname]: value,
     })
   }
 
@@ -100,14 +100,15 @@ export default function UpdateForm(props: { displayForm: UpdateUserForm }) {
         {!isEdit ? (
           <div className="flex flex-col gap-4 w-full">
             {inputList.map((input, index) => (
-              <div className="flex flex-col" key={input.key}>
+              <div className="flex flex-col" key={input.fieldname}>
                 <label className="text-sm font-bold mb-2" htmlFor={input.id}>
                   {input.name}
                 </label>
                 <input
                   {...input}
                   className="input w-full pointer-events-none"
-                  value={formValue[input.key]}
+                  value={formValue[input.fieldname]}
+                  onChange={() => {}}
                 />
               </div>
             ))}
@@ -118,7 +119,7 @@ export default function UpdateForm(props: { displayForm: UpdateUserForm }) {
             className="login__form flex flex-col gap-4 w-full"
           >
             {inputList.map((input, index) => (
-              <div className="flex flex-col" key={input.key}>
+              <div className="flex flex-col" key={input.fieldname}>
                 <label className="text-sm font-bold mb-2" htmlFor={input.id}>
                   {input.name}
                 </label>
@@ -126,11 +127,11 @@ export default function UpdateForm(props: { displayForm: UpdateUserForm }) {
                   {...input}
                   className="input input-bordered w-full peer invalid:[&:not(:placeholder-shown):not(:focus)]:input-error"
                   onChange={(e) => {
-                    onSetFormValue(input.key, e.target.value)
+                    onSetFormValue(input.fieldname, e.target.value)
                   }}
                 />
                 <span className="text-xs hidden mt-2 text-red-500 peer-[&:not(:placeholder-shown):not(:focus):invalid]:block">
-                  {input.errorMessage}
+                  {input.errormessage}
                 </span>
               </div>
             ))}

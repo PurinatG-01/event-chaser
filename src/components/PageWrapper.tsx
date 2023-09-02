@@ -20,7 +20,7 @@ export default function PageWrapper({
           initial={{ clipPath: "polygon(0 1%, 100% 0, 100% 100%, 0% 100%)" }}
           animate={{ clipPath: "polygon(0 1%, 0 0, 0 100%, 0% 100%)" }}
           exit={{ clipPath: "polygon(0 1%, 100% 0, 100% 100%, 0% 100%)" }}
-          className="top-0 left-0 absolute w-[50vw] h-screen z-[50]"
+          className="top-0 left-0 absolute w-[50vw] h-screen z-[50] bg-base-100 shadow-md"
         ></motion.div>
         <motion.div
           transition={{ duration: 0.7 }}
@@ -29,7 +29,7 @@ export default function PageWrapper({
             clipPath: "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)",
           }}
           exit={{ clipPath: "polygon(0 1%, 100% 0, 100% 100%, 0 100%)" }}
-          className="top-0 right-0 absolute w-[50vw] h-screen z-[50]"
+          className="top-0 right-0 absolute w-[50vw] h-screen z-[50] bg-base-100 shadow-md"
         ></motion.div>
         {children}
         <footer className="footer flex justify-between p-10 bg-neutral text-neutral-content mt-auto">

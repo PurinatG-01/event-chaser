@@ -3,9 +3,6 @@ import React, { useEffect, useState } from "react"
 import EventGridList from "~/components/EventGridList"
 import PageWrapper from "~/components/PageWrapper"
 import useEventList from "~/hooks/useEventList"
-import { Swiper, SwiperSlide } from "swiper/react"
-import { Autoplay, Pagination as SwiperPagination } from "swiper/modules"
-import EventCard from "~/components/EventCard"
 import { motion } from "framer-motion"
 
 import "./list.css"
@@ -36,7 +33,7 @@ export default function ListPage() {
   }
   return (
     <PageWrapper>
-      <h1 className="text-4xl font-bold flex mb-4 justify-between flex-wrap items-center p-4">
+      <h1 className="text-4xl font-bold flex mb-4 justify-between flex-wrap items-center p-4 !max-w-[1400px] mx-auto w-full">
         Event list
       </h1>
       <div className="flex flex-col py-4 !max-w-[1400px] mx-auto w-full">

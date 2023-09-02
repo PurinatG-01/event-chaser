@@ -1,5 +1,5 @@
 "use client"
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useRef, useState } from "react"
 import { Card } from "~/components/Card"
 import useInfiniteScroll from "~/hooks/useInfiniteScroll"
 import useUserTransactions from "~/hooks/useUserTransactions"

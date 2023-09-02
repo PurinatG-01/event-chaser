@@ -45,14 +45,18 @@ export default function EventDetail({ event }: { event: Event }) {
       <div className="mx-auto w-full mt-4 justify-center items-center flex shadow-xl">
         <button
           className={`max-w-[600px] w-full rounded-lg active:scale-[0.95] transition-all flex items-center justify-center active:opacity-70 hover:opacity-70
-        font-semibold bg-green-400 text-bold text-white mt-auto px-4 py-2 relative ${
+        font-semibold relative bg-green-400 text-bold text-white mt-auto px-4 py-2 ${
           event.ticketPrice <= 0 ? "opacity-50 !bg-slate-400" : ""
         }`}
           disabled={event.ticketPrice <= 0}
         >
           <Link
-            href={`/event/${event.id}/purchase`}
-            className={`${event.ticketPrice <= 0 ? "pointer-events-none" : ""}`}
+            href={`/event/${event.id}/transaction`}
+            className={`${
+              event.ticketPrice <= 0
+                ? "pointer-events-none"
+                : "w-full h-full absolute z-10 top-0 left-0"
+            }`}
           ></Link>
           {event.ticketPrice <= 0 ? "Unable to purchase" : "Purchase"}
         </button>

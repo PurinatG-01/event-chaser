@@ -1,9 +1,6 @@
 "use client"
 import React, { useState } from "react"
-import {
-  BaseTransactionStepProps,
-  StepFooter,
-} from "~/app/(index)/event/[id]/transaction/page"
+import { BaseTransactionStepProps, StepFooter } from "./StepFooter"
 
 const ChannelList = [
   {

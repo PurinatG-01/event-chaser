@@ -2,6 +2,7 @@
 import React, { useMemo, useState } from "react"
 import PageWrapper from "~/components/PageWrapper"
 import dynamic from "next/dynamic"
+import { BaseTransactionStepProps } from "~/components/transaction/StepFooter"
 
 enum TRANSACTION_STEP {
   SELECT_CHANNEL = "SelectChannel",
@@ -49,7 +50,7 @@ export default function EbookTransactionByIdPage() {
   )
 }
 
-export function TransactionStepper(props: TransactionStepperProps) {
+function TransactionStepper(props: TransactionStepperProps) {
   const { currentStep, onClickStep } = props
   const activeStep = currentStep ?? 0
   return (
@@ -69,49 +70,8 @@ export function TransactionStepper(props: TransactionStepperProps) {
   )
 }
 
-export function StepFooter(props: StepFooterProps) {
-  const { onGoPrev, onGoNext, hidePrev, hideNext } = props
-  return (
-    <div className="flex w-full justify-between mt-auto pt-4">
-      {!hidePrev ? (
-        <button
-          onClick={() => {
-            if (!!onGoPrev) onGoPrev()
-          }}
-          className="btn mr-auto"
-        >
-          Back
-        </button>
-      ) : (
-        <></>
-      )}
-      {!hideNext ? (
-        <button
-          onClick={() => {
-            if (!!onGoNext) onGoNext()
-          }}
-          className="btn ml-auto"
-        >
-          Next
-        </button>
-      ) : (
-        <></>
-      )}
-    </div>
-  )
-}
-
 interface TransactionStepperProps {
   // start at 0
   currentStep?: number
   onClickStep?: (stepIndex: number) => void
-}
-export interface StepFooterProps extends BaseTransactionStepProps {
-  hidePrev: boolean
-  hideNext: boolean
-}
-
-export interface BaseTransactionStepProps {
-  onGoPrev?: () => void
-  onGoNext?: () => void
 }

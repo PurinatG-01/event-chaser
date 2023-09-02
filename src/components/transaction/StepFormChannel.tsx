@@ -1,8 +1,5 @@
 import React from "react"
-import {
-  BaseTransactionStepProps,
-  StepFooter,
-} from "~/app/(index)/event/[id]/transaction/page"
+import { BaseTransactionStepProps, StepFooter } from "./StepFooter"
 
 export default function StepSummary(props: Props) {
   const { onGoPrev, onGoNext } = props

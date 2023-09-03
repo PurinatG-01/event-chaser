@@ -34,7 +34,6 @@ export default function StepSelectMethod(props: Props) {
 
   return (
     <div className="flex flex-col flex-grow">
-      channel: {channel}
       <ol className="flex flex-col gap-4 mt-auto">
         {ChannelList.map((_channel) => (
           <li

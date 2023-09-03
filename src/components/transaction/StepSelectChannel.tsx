@@ -1,44 +1,54 @@
 "use client"
-import React, { useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { BaseTransactionStepProps, StepFooter } from "./StepFooter"
+import {
+  TRANSACTION_CHANNEL,
+  useTransactionStep,
+} from "~/provider/useTransactionStep"
 
 const ChannelList = [
   {
     id: "promptpay",
     text: "Promptpay",
-    value: "promptpay",
+    value: TRANSACTION_CHANNEL.PROMPTPAY,
   },
   {
     id: "credit-card",
     text: "Credit card",
-    value: "credit-card",
+    value: TRANSACTION_CHANNEL.CREDIT_CARD,
   },
 ]
 
 export default function StepSelectMethod(props: Props) {
   const { onGoNext } = props
-  const [activeChannel, setActiveChannel] = useState<string>("")
+  const { channel, setTransactionChannel } = useTransactionStep()
 
-  const onClickChannel = (channel: string) => {
-    setActiveChannel(channel)
+  const onClickChannel = (channel: TRANSACTION_CHANNEL) => {
+    if (channel) setTransactionChannel(channel)
   }
+
+  const handleOnGoNext = useCallback(() => {
+    if (!onGoNext || !channel) return
+    onGoNext()
+  }, [channel, onGoNext])
 
   return (
     <div className="flex flex-col flex-grow">
+      channel: {channel}
       <ol className="flex flex-col gap-4 mt-auto">
-        {ChannelList.map((channel) => (
+        {ChannelList.map((_channel) => (
           <li
-            key={channel.id}
+            key={_channel.id}
             className={`p-4 rounded border border-base-300 cursor-pointer hover:opacity-70 transition-all ${
-              activeChannel == channel.id ? "text-white bg-primary" : ""
+              channel == _channel.value ? "text-white bg-primary" : ""
             }`}
-            onClick={() => onClickChannel(channel.id)}
+            onClick={() => onClickChannel(_channel.value)}
           >
-            {channel.text}
+            {_channel.text}
           </li>
         ))}
       </ol>
-      <StepFooter onGoNext={onGoNext} hidePrev={true} hideNext={false} />
+      <StepFooter onGoNext={handleOnGoNext} hidePrev={true} hideNext={false} />
     </div>
   )
 }

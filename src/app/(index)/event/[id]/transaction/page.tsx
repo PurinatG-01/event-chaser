@@ -3,6 +3,7 @@ import React, { useMemo, useState } from "react"
 import PageWrapper from "~/components/PageWrapper"
 import dynamic from "next/dynamic"
 import { BaseTransactionStepProps } from "~/components/transaction/StepFooter"
+import TransactionStepProvider from "~/provider/useTransactionStep"
 
 enum TRANSACTION_STEP {
   SELECT_CHANNEL = "SelectChannel",
@@ -31,20 +32,22 @@ export default function EbookTransactionByIdPage() {
   return (
     <PageWrapper>
       <div className="p-4 py-8 flex flex-col w-full min-h-[60vh]">
-        <TransactionStepper
-          currentStep={activeStep}
-          onClickStep={(stepIndex) => setActiveStep(stepIndex)}
-        />
-        <section className="flex-grow p-4 mt-4 border rounded-md border-base-300 flex flex-col">
-          {!!DynamicComponent ? (
-            <DynamicComponent
-              onGoPrev={() => setActiveStep((prev) => prev - 1)}
-              onGoNext={() => setActiveStep((prev) => prev + 1)}
-            />
-          ) : (
-            <></>
-          )}
-        </section>
+        <TransactionStepProvider>
+          <TransactionStepper
+            currentStep={activeStep}
+            onClickStep={(stepIndex) => setActiveStep(stepIndex)}
+          />
+          <section className="flex-grow p-4 mt-4 border rounded-md border-base-300 flex flex-col">
+            {!!DynamicComponent ? (
+              <DynamicComponent
+                onGoPrev={() => setActiveStep((prev) => prev - 1)}
+                onGoNext={() => setActiveStep((prev) => prev + 1)}
+              />
+            ) : (
+              <></>
+            )}
+          </section>
+        </TransactionStepProvider>
       </div>
     </PageWrapper>
   )

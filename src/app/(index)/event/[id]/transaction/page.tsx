@@ -60,7 +60,7 @@ export default function EbookTransactionByIdPage() {
 
   return (
     <PageWrapper>
-      <div className="p-4 py-8 flex flex-col w-full min-h-[60vh]">
+      <div className="p-4 py-8 flex flex-col w-full min-h-[60vh] mx-auto max-w-[600px]">
         <TransactionStepProvider>
           <TransactionStepper
             currentStep={activeStep}
